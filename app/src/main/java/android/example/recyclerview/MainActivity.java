@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.LinkedList;
 
@@ -28,5 +31,17 @@ public class MainActivity extends AppCompatActivity {
         mAdapter = new WordListAdapter(this, mWordList);
         mRecycleView.setAdapter(mAdapter);
         mRecycleView.setLayoutManager(new LinearLayoutManager(this));
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int wordListSize = mWordList.size();
+                mWordList.addLast("+ Word " + wordListSize);
+                mRecycleView.getAdapter().notifyItemInserted(wordListSize);
+                mRecycleView.smoothScrollToPosition(wordListSize);
+            }
+        });
     }
+
 }
